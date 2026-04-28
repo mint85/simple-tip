@@ -1,0 +1,233 @@
+:root {
+  color-scheme: light dark;
+  --bg: #eef4f2;
+  --surface: #ffffff;
+  --ink: #142124;
+  --muted: #607276;
+  --line: #cbd9d7;
+  --primary: #0f6b73;
+  --primary-deep: #123a42;
+  --accent: #d9753b;
+  --button: #f6faf9;
+  --button-pressed: #dce9e7;
+  --shadow: 0 18px 40px rgba(18, 58, 66, 0.16);
+  font-family: Inter, Roboto, "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  align-items: center;
+  background: var(--bg);
+  color: var(--ink);
+  display: flex;
+  justify-content: center;
+  padding: env(safe-area-inset-top) 14px env(safe-area-inset-bottom);
+}
+
+button,
+output {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 14px;
+  grid-template-rows: auto 1fr;
+  min-height: min(100svh, 920px);
+  max-width: 460px;
+  padding: 18px;
+  width: 100%;
+}
+
+.summary {
+  display: grid;
+  gap: 14px;
+}
+
+.brand-row {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  min-height: 42px;
+}
+
+.app-icon {
+  height: 38px;
+  width: 38px;
+}
+
+h1 {
+  font-size: 1.35rem;
+  line-height: 1;
+  margin: 0;
+}
+
+.bill-panel {
+  background: var(--primary-deep);
+  color: #ffffff;
+  display: grid;
+  gap: 4px;
+  padding: 18px;
+}
+
+.label {
+  color: var(--muted);
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.bill-panel .label {
+  color: #b9d2d4;
+}
+
+.bill {
+  font-size: clamp(2.6rem, 14vw, 4.5rem);
+  font-weight: 850;
+  line-height: 1;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.controls {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.control {
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.stepper {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  min-height: 48px;
+}
+
+.stepper button {
+  aspect-ratio: 1;
+  background: var(--button);
+  border: 1px solid var(--line);
+  color: var(--primary-deep);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.stepper button:active,
+.keypad button:active {
+  background: var(--button-pressed);
+  transform: translateY(1px);
+}
+
+.stepper output {
+  font-size: 1.45rem;
+  font-weight: 850;
+  text-align: center;
+}
+
+.totals {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.totals > div {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  min-height: 34px;
+}
+
+.totals output {
+  font-size: 1.42rem;
+  font-weight: 850;
+}
+
+.keypad {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(70px, 1fr));
+  min-height: 360px;
+}
+
+.keypad button {
+  background: var(--button);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: clamp(1.75rem, 8vw, 2.45rem);
+  font-weight: 850;
+  min-height: 70px;
+}
+
+.keypad .utility {
+  color: var(--primary);
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  text-transform: uppercase;
+}
+
+.keypad #reset {
+  color: var(--accent);
+}
+
+@media (max-width: 360px) {
+  body {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .app {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .keypad {
+    gap: 8px;
+    grid-template-rows: repeat(4, minmax(62px, 1fr));
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #071113;
+    --surface: #102023;
+    --ink: #eef7f6;
+    --muted: #9fb5b8;
+    --line: #294246;
+    --button: #152b2f;
+    --button-pressed: #203f44;
+    --shadow: none;
+  }
+}

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#123a42">
+    <meta name="description" content="A simple one-screen tip calculator.">
+    <title>Simple Tip</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icons/icon.svg">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app" aria-label="Simple Tip Calculator">
+      <section class="summary" aria-live="polite">
+        <div class="brand-row">
+          <img src="icons/icon.svg" alt="" class="app-icon">
+          <h1>Simple Tip</h1>
+        </div>
+
+        <div class="bill-panel">
+          <span class="label">Bill amount</span>
+          <output id="billAmount" class="bill" aria-label="Bill amount">$0.00</output>
+        </div>
+
+        <div class="controls" aria-label="Tip and split controls">
+          <div class="control">
+            <span class="label">Tip</span>
+            <div class="stepper">
+              <button type="button" id="tipDown" aria-label="Decrease tip percentage">−</button>
+              <output id="tipPercent" aria-label="Tip percentage">18%</output>
+              <button type="button" id="tipUp" aria-label="Increase tip percentage">+</button>
+            </div>
+          </div>
+
+          <div class="control">
+            <span class="label">Split</span>
+            <div class="stepper">
+              <button type="button" id="splitDown" aria-label="Decrease people">−</button>
+              <output id="splitCount" aria-label="Number of people">1</output>
+              <button type="button" id="splitUp" aria-label="Increase people">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="totals">
+          <div>
+            <span class="label">Total to pay</span>
+            <output id="totalToPay">$0.00</output>
+          </div>
+          <div>
+            <span class="label">Total tip</span>
+            <output id="totalTip">$0.00</output>
+          </div>
+          <div>
+            <span class="label">Per person</span>
+            <output id="perPerson">$0.00</output>
+          </div>
+        </div>
+      </section>
+
+      <section class="keypad" aria-label="Bill amount keypad">
+        <button type="button" data-digit="1">1</button>
+        <button type="button" data-digit="2">2</button>
+        <button type="button" data-digit="3">3</button>
+        <button type="button" data-digit="4">4</button>
+        <button type="button" data-digit="5">5</button>
+        <button type="button" data-digit="6">6</button>
+        <button type="button" data-digit="7">7</button>
+        <button type="button" data-digit="8">8</button>
+        <button type="button" data-digit="9">9</button>
+        <button type="button" id="reset" class="utility">Reset</button>
+        <button type="button" data-digit="0">0</button>
+        <button type="button" id="delete" class="utility">Delete</button>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

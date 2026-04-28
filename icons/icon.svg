@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Simple Tip icon">
+  <rect width="512" height="512" rx="96" fill="#123a42"/>
+  <path fill="#f8fbfa" d="M156 108h200c27 0 48 21 48 48v200c0 27-21 48-48 48H156c-27 0-48-21-48-48V156c0-27 21-48 48-48Zm0 42c-4 0-6 2-6 6v200c0 4 2 6 6 6h200c4 0 6-2 6-6V156c0-4-2-6-6-6H156Z"/>
+  <path fill="#d9753b" d="M178 184h156v48H178z"/>
+  <circle cx="206" cy="292" r="24" fill="#0f6b73"/>
+  <circle cx="256" cy="292" r="24" fill="#0f6b73"/>
+  <circle cx="306" cy="292" r="24" fill="#0f6b73"/>
+  <path fill="#f8fbfa" d="M245 344v-25h22v25h25v22h-25v25h-22v-25h-25v-22h25Z"/>
+</svg>

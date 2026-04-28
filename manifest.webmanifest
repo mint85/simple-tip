@@ -1,0 +1,19 @@
+{
+  "name": "Simple Tip",
+  "short_name": "Simple Tip",
+  "description": "A simple one-screen tip calculator.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#eef4f2",
+  "theme_color": "#123a42",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
