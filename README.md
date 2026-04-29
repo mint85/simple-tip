@@ -1,30 +1,23 @@
 # Simple Tip
 
-A tiny installable tip calculator inspired by the old Android app. It has:
+A small installable tip calculator inspired by an old Android app I used to use.
+
+## Features
 
 - keypad bill entry where `1234` means `$12.34`
 - Reset and Delete keys in the phone-keypad positions
 - tip percentage stepper
 - bill split stepper
 - instant total, tip, and per-person totals
-- no ads, no network calls, no permissions, no tracking
+- responsive layout that fits phone screens without scrolling
+- no ads, no network calls, no permissions, no tracking, no bs
 
-## Try It Locally
+## Install On A Mobile Device
 
-From this folder:
+Open the GitHub Pages URL in the device's web browser:
 
-```sh
-python3 -m http.server 4173 -d .
-```
+https://mint85.github.io/simple-tip/
 
-Then open:
-
-```text
-http://127.0.0.1:4173/
-```
-
-## Install On A Samsung Galaxy
-
-For a normal home-screen install, host this folder on any HTTPS static host, such as GitHub Pages, Netlify, Cloudflare Pages, or your own web server. Then open the HTTPS URL on the phone in Chrome or Samsung Internet and choose **Add to Home screen** or **Install app** from the browser menu.
+Then choose **Add to Home screen** or **Install app** from the browser menu.
 
 After the first load, the service worker caches the app so it keeps working offline.
