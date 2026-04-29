@@ -9,6 +9,8 @@ const money = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
+const HAPTIC_TAP_MS = 22;
+
 const elements = {
   billAmount: document.querySelector("#billAmount"),
   tipPercent: document.querySelector("#tipPercent"),
@@ -34,7 +36,7 @@ function formatCents(cents) {
 
 function hapticTap() {
   if ("vibrate" in navigator) {
-    navigator.vibrate(8);
+    navigator.vibrate(HAPTIC_TAP_MS);
   }
 }
 
