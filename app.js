@@ -32,6 +32,12 @@ function formatCents(cents) {
   return money.format(cents / 100);
 }
 
+function hapticTap() {
+  if ("vibrate" in navigator) {
+    navigator.vibrate(8);
+  }
+}
+
 function render() {
   const tipCents = Math.round(state.cents * (state.tipPercent / 100));
   const totalCents = state.cents + tipCents;
@@ -53,6 +59,10 @@ function addDigit(digit) {
   state.cents = state.cents * 10 + Number(digit);
   render();
 }
+
+document.querySelectorAll("button").forEach((button) => {
+  button.addEventListener("pointerdown", hapticTap);
+});
 
 document.querySelectorAll("[data-digit]").forEach((button) => {
   button.addEventListener("click", () => addDigit(button.dataset.digit));
