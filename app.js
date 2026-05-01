@@ -63,7 +63,7 @@ function addDigit(digit) {
 }
 
 document.querySelectorAll("button").forEach((button) => {
-  button.addEventListener("pointerdown", hapticTap);
+  button.addEventListener("click", hapticTap);
 });
 
 document.querySelectorAll("[data-digit]").forEach((button) => {
