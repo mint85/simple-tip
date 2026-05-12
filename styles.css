@@ -7,6 +7,7 @@
   --line: #cbd9d7;
   --primary: #0f6b73;
   --primary-deep: #123a42;
+  --control-ink: #1a5d66;
   --accent: #d9753b;
   --button: #f6faf9;
   --button-pressed: #dce9e7;
@@ -98,7 +99,7 @@ h1 {
   aspect-ratio: 1;
   background: var(--button);
   border: 1px solid var(--line);
-  color: var(--primary-deep);
+  color: var(--control-ink);
   display: inline-flex;
   flex: 0 0 auto;
   font-size: 1rem;
@@ -170,7 +171,7 @@ h1 {
   aspect-ratio: 1;
   background: var(--button);
   border: 1px solid var(--line);
-  color: var(--primary-deep);
+  color: var(--control-ink);
   font-size: 1.5rem;
   font-weight: 800;
 }
@@ -373,6 +374,7 @@ h1 {
     --line: #294246;
     --button: #152b2f;
     --button-pressed: #203f44;
+    --control-ink: #2a7f89;
     --shadow: none;
   }
 }
