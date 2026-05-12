@@ -315,16 +315,16 @@ h1 {
 }
 
 .portfolio-button {
-  background: var(--button);
-  border: 1px solid var(--line);
-  color: var(--primary-deep);
+  background: var(--primary-deep);
+  border: 1px solid var(--primary-deep);
+  color: #ffffff !important;
   gap: 10px;
   font-weight: 800;
 }
 
 .portfolio-favicon {
-  height: 22px;
-  width: 22px;
+  height: 1em;
+  width: 1em;
 }
 
 .support-button {
