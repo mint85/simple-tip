@@ -109,6 +109,7 @@ h1 {
 }
 
 .icon-button:active,
+.portfolio-button:active,
 .support-button:active {
   background: var(--button-pressed);
   transform: translateY(1px);
@@ -294,6 +295,7 @@ h1 {
 }
 
 .about-meta {
+  text-align: center;
   font-weight: 700;
 }
 
@@ -302,23 +304,34 @@ h1 {
   gap: 10px;
 }
 
-.about-links a {
-  color: var(--primary);
-  font-weight: 800;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
-
+.portfolio-button,
 .support-button {
   align-items: center;
-  background: var(--primary-deep);
-  border: 1px solid var(--primary-deep);
-  color: #ffffff !important;
   display: inline-flex;
   justify-content: center;
   min-height: 48px;
   padding: 0 16px;
   text-decoration: none !important;
+}
+
+.portfolio-button {
+  background: var(--button);
+  border: 1px solid var(--line);
+  color: var(--primary-deep);
+  gap: 10px;
+  font-weight: 800;
+}
+
+.portfolio-favicon {
+  height: 22px;
+  width: 22px;
+}
+
+.support-button {
+  background: var(--primary-deep);
+  border: 1px solid var(--primary-deep);
+  color: #ffffff !important;
+  font-weight: 800;
 }
 
 @media (max-width: 360px) {
