@@ -15,8 +15,13 @@
     <main class="app" aria-label="Simple Tip Calculator">
       <section class="summary" aria-live="polite">
         <div class="brand-row">
-          <img src="icons/icon.svg" alt="" class="app-icon">
-          <h1>Simple Tip</h1>
+          <div class="brand-lockup">
+            <img src="icons/icon.svg" alt="" class="app-icon">
+            <h1>Simple Tip</h1>
+          </div>
+          <button type="button" id="aboutOpen" class="icon-button" aria-label="About Simple Tip" aria-haspopup="dialog">
+            i
+          </button>
         </div>
 
         <div class="bill-panel">
@@ -75,6 +80,31 @@
         <button type="button" id="delete" class="utility">Delete</button>
       </section>
     </main>
+
+    <dialog id="aboutDialog" class="about-dialog" aria-labelledby="aboutTitle">
+      <div class="about-sheet">
+        <button type="button" id="aboutClose" class="icon-button about-close" aria-label="Close about panel">
+          ×
+        </button>
+
+        <div class="about-heading">
+          <img src="icons/icon.svg" alt="" class="about-icon">
+          <div>
+            <h2 id="aboutTitle">Simple Tip</h2>
+            <p>A tidy little calculator for the moment between the bill and the goodbye.</p>
+          </div>
+        </div>
+
+        <p class="about-meta">Built by Allen Jones</p>
+
+        <div class="about-links">
+          <a href="https://allenjones.dev" target="_blank" rel="noreferrer">allenjones.dev</a>
+          <a class="support-button" href="https://buymeacoffee.com/allenjones" target="_blank" rel="noreferrer">
+            ☕ Support this app
+          </a>
+        </div>
+      </div>
+    </dialog>
 
     <script src="app.js"></script>
   </body>

@@ -24,6 +24,9 @@ const elements = {
   splitUp: document.querySelector("#splitUp"),
   reset: document.querySelector("#reset"),
   delete: document.querySelector("#delete"),
+  aboutOpen: document.querySelector("#aboutOpen"),
+  aboutClose: document.querySelector("#aboutClose"),
+  aboutDialog: document.querySelector("#aboutDialog"),
 };
 
 function clamp(value, min, max) {
@@ -98,6 +101,20 @@ elements.splitDown.addEventListener("click", () => {
 elements.splitUp.addEventListener("click", () => {
   state.splitCount = clamp(state.splitCount + 1, 1, 99);
   render();
+});
+
+elements.aboutOpen.addEventListener("click", () => {
+  elements.aboutDialog.showModal();
+});
+
+elements.aboutClose.addEventListener("click", () => {
+  elements.aboutDialog.close();
+});
+
+elements.aboutDialog.addEventListener("click", (event) => {
+  if (event.target === elements.aboutDialog) {
+    elements.aboutDialog.close();
+  }
 });
 
 document.addEventListener("keydown", (event) => {

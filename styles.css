@@ -71,7 +71,15 @@ button {
   align-items: center;
   display: flex;
   gap: 10px;
+  justify-content: space-between;
   min-height: clamp(34px, 4.7dvh, 42px);
+}
+
+.brand-lockup {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  min-width: 0;
 }
 
 .app-icon {
@@ -83,6 +91,27 @@ h1 {
   font-size: 1.35rem;
   line-height: 1;
   margin: 0;
+}
+
+.icon-button {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--button);
+  border: 1px solid var(--line);
+  color: var(--primary-deep);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 1rem;
+  font-weight: 850;
+  height: clamp(34px, 4.7dvh, 42px);
+  justify-content: center;
+  line-height: 1;
+}
+
+.icon-button:active,
+.support-button:active {
+  background: var(--button-pressed);
+  transform: translateY(1px);
 }
 
 .bill-panel {
@@ -203,6 +232,95 @@ h1 {
   color: var(--accent);
 }
 
+.about-dialog {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  margin: auto auto 0;
+  max-width: 460px;
+  padding: 0;
+  width: 100%;
+}
+
+.about-dialog::backdrop {
+  background: rgba(7, 17, 19, 0.58);
+}
+
+.about-sheet {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  position: relative;
+}
+
+.about-close {
+  height: 38px;
+  justify-self: end;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+}
+
+.about-heading {
+  align-items: start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 44px minmax(0, 1fr);
+  padding-right: 48px;
+}
+
+.about-icon {
+  height: 44px;
+  width: 44px;
+}
+
+.about-heading h2 {
+  font-size: 1.2rem;
+  line-height: 1.1;
+  margin: 0 0 6px;
+}
+
+.about-heading p,
+.about-meta {
+  color: var(--muted);
+  margin: 0;
+}
+
+.about-heading p {
+  line-height: 1.45;
+}
+
+.about-meta {
+  font-weight: 700;
+}
+
+.about-links {
+  display: grid;
+  gap: 10px;
+}
+
+.about-links a {
+  color: var(--primary);
+  font-weight: 800;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.support-button {
+  align-items: center;
+  background: var(--primary-deep);
+  border: 1px solid var(--primary-deep);
+  color: #ffffff !important;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 16px;
+  text-decoration: none !important;
+}
+
 @media (max-width: 360px) {
   body {
     padding: 0;
@@ -220,6 +338,16 @@ h1 {
   .keypad {
     gap: 8px;
     grid-template-rows: repeat(4, minmax(62px, 1fr));
+  }
+
+  .about-sheet {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .about-close {
+    right: 16px;
+    top: 16px;
   }
 }
 

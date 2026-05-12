@@ -1,4 +1,4 @@
-const CACHE_NAME = "simple-tip-v5";
+const CACHE_NAME = "simple-tip-v6";
 const ASSETS = [
   "./",
   "./index.html",
