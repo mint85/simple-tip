@@ -2,8 +2,8 @@ import { appendDigit, computeTotals, deleteDigit, percentTipCents } from "./calc
 
 const state = {
   cents: 0,
-  tipPercent: Number(localStorage.getItem("simpleTip.tipPercent")) || 18,
-  splitCount: Number(localStorage.getItem("simpleTip.splitCount")) || 1,
+  tipPercent: 20,
+  splitCount: 1,
 };
 
 const money = new Intl.NumberFormat("en-US", {
@@ -55,9 +55,6 @@ function render() {
   elements.totalToPay.value = formatCents(totalCents);
   elements.totalTip.value = formatCents(tipCents);
   elements.perPerson.value = formatCents(perPersonCents);
-
-  localStorage.setItem("simpleTip.tipPercent", String(state.tipPercent));
-  localStorage.setItem("simpleTip.splitCount", String(state.splitCount));
 }
 
 function addDigit(digit) {
