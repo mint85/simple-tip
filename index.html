@@ -31,10 +31,16 @@
 
         <div class="controls" aria-label="Tip and split controls">
           <div class="control">
-            <span class="label">Tip</span>
+            <div class="control-head">
+              <span class="label">Tip</span>
+              <div class="unit-toggle" role="group" aria-label="Tip unit">
+                <button type="button" id="tipModePercent" aria-pressed="true" aria-label="Tip as a percentage">%</button>
+                <button type="button" id="tipModeDollars" aria-pressed="false" aria-label="Tip as a dollar amount">$</button>
+              </div>
+            </div>
             <div class="stepper">
               <button type="button" id="tipDown" aria-label="Decrease tip percentage">−</button>
-              <output id="tipPercent" aria-label="Tip percentage">20%</output>
+              <output id="tipValue" aria-label="Tip percentage">20%</output>
               <button type="button" id="tipUp" aria-label="Increase tip percentage">+</button>
             </div>
           </div>
@@ -55,7 +61,7 @@
             <output id="totalToPay">$0.00</output>
           </div>
           <div>
-            <span class="label">Total tip</span>
+            <span class="label" id="totalTipLabel">Total tip</span>
             <output id="totalTip">$0.00</output>
           </div>
           <div>

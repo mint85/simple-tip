@@ -1,10 +1,21 @@
-import { appendDigit, computeTotals, deleteDigit, percentTipCents } from "./calc.js";
+import {
+  appendDigit,
+  computeTotals,
+  deleteDigit,
+  effectiveTipPercent,
+  nearestDollarTip,
+  percentTipCents,
+} from "./calc.js";
 
 const state = {
   cents: 0,
+  tipMode: "percent",
   tipPercent: 20,
+  tipDollars: 0,
   splitCount: 1,
 };
+
+const MAX_TIP_DOLLARS = 999;
 
 const money = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -15,10 +26,13 @@ const HAPTIC_TAP_MS = 22;
 
 const elements = {
   billAmount: document.querySelector("#billAmount"),
-  tipPercent: document.querySelector("#tipPercent"),
+  tipValue: document.querySelector("#tipValue"),
+  tipModePercent: document.querySelector("#tipModePercent"),
+  tipModeDollars: document.querySelector("#tipModeDollars"),
   splitCount: document.querySelector("#splitCount"),
   totalToPay: document.querySelector("#totalToPay"),
   totalTip: document.querySelector("#totalTip"),
+  totalTipLabel: document.querySelector("#totalTipLabel"),
   perPerson: document.querySelector("#perPerson"),
   tipDown: document.querySelector("#tipDown"),
   tipUp: document.querySelector("#tipUp"),
@@ -39,6 +53,10 @@ function formatCents(cents) {
   return money.format(cents / 100);
 }
 
+function formatPercent(percent) {
+  return percent === null ? "—" : `${percent.toFixed(1)}%`;
+}
+
 function hapticTap() {
   if ("vibrate" in navigator) {
     navigator.vibrate(HAPTIC_TAP_MS);
@@ -46,15 +64,36 @@ function hapticTap() {
 }
 
 function render() {
-  const tipCents = percentTipCents(state.cents, state.tipPercent);
+  const dollarMode = state.tipMode === "dollars";
+  const tipCents = dollarMode ? state.tipDollars * 100 : percentTipCents(state.cents, state.tipPercent);
   const { totalCents, perPersonCents } = computeTotals(state.cents, tipCents, state.splitCount);
 
   elements.billAmount.value = formatCents(state.cents);
-  elements.tipPercent.value = `${state.tipPercent}%`;
+  elements.tipValue.value = dollarMode ? `$${state.tipDollars}` : `${state.tipPercent}%`;
   elements.splitCount.value = String(state.splitCount);
   elements.totalToPay.value = formatCents(totalCents);
-  elements.totalTip.value = formatCents(tipCents);
   elements.perPerson.value = formatCents(perPersonCents);
+
+  // In dollar mode the stepper already shows the tip, so this slot shows the rate instead.
+  elements.totalTipLabel.textContent = dollarMode ? "Tip rate" : "Total tip";
+  elements.totalTip.value = dollarMode
+    ? formatPercent(effectiveTipPercent(state.cents, tipCents))
+    : formatCents(tipCents);
+
+  elements.tipModePercent.setAttribute("aria-pressed", String(!dollarMode));
+  elements.tipModeDollars.setAttribute("aria-pressed", String(dollarMode));
+  elements.tipValue.setAttribute("aria-label", dollarMode ? "Tip in dollars" : "Tip percentage");
+  elements.tipDown.setAttribute("aria-label", dollarMode ? "Decrease tip by one dollar" : "Decrease tip percentage");
+  elements.tipUp.setAttribute("aria-label", dollarMode ? "Increase tip by one dollar" : "Increase tip percentage");
+}
+
+function stepTip(direction) {
+  if (state.tipMode === "dollars") {
+    state.tipDollars = clamp(state.tipDollars + direction, 0, MAX_TIP_DOLLARS);
+  } else {
+    state.tipPercent = clamp(state.tipPercent + direction, 0, 100);
+  }
+  render();
 }
 
 function addDigit(digit) {
@@ -80,15 +119,20 @@ elements.delete.addEventListener("click", () => {
   render();
 });
 
-elements.tipDown.addEventListener("click", () => {
-  state.tipPercent = clamp(state.tipPercent - 1, 0, 100);
+elements.tipModePercent.addEventListener("click", () => {
+  state.tipMode = "percent";
   render();
 });
 
-elements.tipUp.addEventListener("click", () => {
-  state.tipPercent = clamp(state.tipPercent + 1, 0, 100);
+elements.tipModeDollars.addEventListener("click", () => {
+  if (state.tipMode === "dollars") return;
+  state.tipMode = "dollars";
+  state.tipDollars = nearestDollarTip(state.cents, state.tipPercent);
   render();
 });
+
+elements.tipDown.addEventListener("click", () => stepTip(-1));
+elements.tipUp.addEventListener("click", () => stepTip(1));
 
 elements.splitDown.addEventListener("click", () => {
   state.splitCount = clamp(state.splitCount - 1, 1, 99);

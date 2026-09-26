@@ -23,3 +23,13 @@ export function computeTotals(billCents, tipCents, splitCount) {
     perPersonCents: Math.round(totalCents / splitCount),
   };
 }
+
+// Whole-dollar tip that is closest to a percent tip, used to seed dollar mode.
+export function nearestDollarTip(billCents, tipPercent) {
+  return Math.round(percentTipCents(billCents, tipPercent) / 100);
+}
+
+// For display only; never fed back into money math. Null when there is no bill.
+export function effectiveTipPercent(billCents, tipCents) {
+  return billCents === 0 ? null : (tipCents * 100) / billCents;
+}

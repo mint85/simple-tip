@@ -1,7 +1,14 @@
 // Run with: node --test
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { appendDigit, computeTotals, deleteDigit, percentTipCents } from "../calc.js";
+import {
+  appendDigit,
+  computeTotals,
+  deleteDigit,
+  effectiveTipPercent,
+  nearestDollarTip,
+  percentTipCents,
+} from "../calc.js";
 
 test("keypad digits build cents directly", () => {
   const cents = [1, 2, 3, 4].reduce(appendDigit, 0);
@@ -41,4 +48,24 @@ test("totals add the tip and round the per-person share", () => {
   });
   assert.equal(computeTotals(1000, 0, 3).perPersonCents, 333); // 333.33
   assert.equal(computeTotals(1001, 0, 2).perPersonCents, 501); // 500.5 rounds up
+});
+
+test("dollar mode starts from the percent tip rounded to a whole dollar", () => {
+  assert.equal(nearestDollarTip(5200, 18), 9); // $9.36
+  assert.equal(nearestDollarTip(5000, 19), 10); // $9.50 rounds up
+  assert.equal(nearestDollarTip(0, 20), 0);
+});
+
+test("effective tip percent is reported against the bill", () => {
+  assert.equal(effectiveTipPercent(5000, 1000), 20);
+  assert.equal(effectiveTipPercent(5200, 900).toFixed(1), "17.3");
+  assert.equal(effectiveTipPercent(0, 900), null);
+});
+
+test("a dollar tip flows through the totals as exact cents", () => {
+  assert.deepEqual(computeTotals(5234, 10 * 100, 3), {
+    tipCents: 1000,
+    totalCents: 6234,
+    perPersonCents: 2078,
+  });
 });

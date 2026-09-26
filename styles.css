@@ -160,6 +160,38 @@ h1 {
   padding: clamp(8px, 1.4dvh, 12px);
 }
 
+.control-head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.unit-toggle {
+  display: flex;
+  /* Keeps the bigger tap targets from making the Tip control taller than Split. */
+  margin-block: -7px;
+}
+
+.unit-toggle button {
+  background: var(--button);
+  border: 1px solid var(--line);
+  color: var(--control-ink);
+  font-size: 0.85rem;
+  font-weight: 850;
+  height: 28px;
+  width: 32px;
+}
+
+.unit-toggle button + button {
+  border-left: 0;
+}
+
+.unit-toggle button[aria-pressed="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
 .stepper {
   align-items: center;
   display: grid;
