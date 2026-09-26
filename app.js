@@ -23,6 +23,10 @@ const money = new Intl.NumberFormat("en-US", {
 });
 
 const HAPTIC_TAP_MS = 22;
+// Holding a stepper repeats after HOLD_DELAY_MS, then steadily every HOLD_REPEAT_MS
+// (about 6 steps a second, no acceleration) so the value never runs away.
+const HOLD_DELAY_MS = 500;
+const HOLD_REPEAT_MS = 150;
 
 const elements = {
   billAmount: document.querySelector("#billAmount"),
@@ -87,13 +91,68 @@ function render() {
   elements.tipUp.setAttribute("aria-label", dollarMode ? "Increase tip by one dollar" : "Increase tip percentage");
 }
 
+// Step functions return false when the value is already at its limit.
 function stepTip(direction) {
-  if (state.tipMode === "dollars") {
-    state.tipDollars = clamp(state.tipDollars + direction, 0, MAX_TIP_DOLLARS);
-  } else {
-    state.tipPercent = clamp(state.tipPercent + direction, 0, 100);
-  }
+  const dollarMode = state.tipMode === "dollars";
+  const key = dollarMode ? "tipDollars" : "tipPercent";
+  const next = clamp(state[key] + direction, 0, dollarMode ? MAX_TIP_DOLLARS : 100);
+  if (next === state[key]) return false;
+  state[key] = next;
   render();
+  return true;
+}
+
+function stepSplit(direction) {
+  const next = clamp(state.splitCount + direction, 1, 99);
+  if (next === state.splitCount) return false;
+  state.splitCount = next;
+  render();
+  return true;
+}
+
+function bindStepperButton(button, step) {
+  let delayTimer;
+  let repeatTimer;
+  let held = false;
+
+  const stop = () => {
+    clearTimeout(delayTimer);
+    clearInterval(repeatTimer);
+  };
+
+  const repeat = () => {
+    held = true;
+    if (step()) hapticTap();
+    else stop();
+  };
+
+  button.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary || event.button !== 0) return;
+    // Touch pointers are captured by default; releasing lets sliding off fire pointerleave.
+    if (button.hasPointerCapture(event.pointerId)) button.releasePointerCapture(event.pointerId);
+    held = false;
+    stop();
+    delayTimer = setTimeout(() => {
+      repeat();
+      repeatTimer = setInterval(repeat, HOLD_REPEAT_MS);
+    }, HOLD_DELAY_MS);
+  });
+
+  ["pointerup", "pointerleave", "pointercancel"].forEach((type) => button.addEventListener(type, stop));
+
+  // Stops a long press from opening the context menu.
+  button.addEventListener("contextmenu", (event) => event.preventDefault());
+
+  // Taps and keyboard presses step here. The click that ends a hold is skipped so
+  // letting go never adds one extra step.
+  button.addEventListener("click", () => {
+    if (held) {
+      held = false;
+      return;
+    }
+    hapticTap();
+    step();
+  });
 }
 
 function addDigit(digit) {
@@ -101,8 +160,9 @@ function addDigit(digit) {
   render();
 }
 
+// Stepper buttons handle their own haptics so a hold buzzes once per step.
 document.querySelectorAll("button").forEach((button) => {
-  button.addEventListener("click", hapticTap);
+  if (!button.closest(".stepper")) button.addEventListener("click", hapticTap);
 });
 
 document.querySelectorAll("[data-digit]").forEach((button) => {
@@ -131,18 +191,10 @@ elements.tipModeDollars.addEventListener("click", () => {
   render();
 });
 
-elements.tipDown.addEventListener("click", () => stepTip(-1));
-elements.tipUp.addEventListener("click", () => stepTip(1));
-
-elements.splitDown.addEventListener("click", () => {
-  state.splitCount = clamp(state.splitCount - 1, 1, 99);
-  render();
-});
-
-elements.splitUp.addEventListener("click", () => {
-  state.splitCount = clamp(state.splitCount + 1, 1, 99);
-  render();
-});
+bindStepperButton(elements.tipDown, () => stepTip(-1));
+bindStepperButton(elements.tipUp, () => stepTip(1));
+bindStepperButton(elements.splitDown, () => stepSplit(-1));
+bindStepperButton(elements.splitUp, () => stepSplit(1));
 
 elements.aboutOpen.addEventListener("click", () => {
   elements.aboutDialog.showModal();

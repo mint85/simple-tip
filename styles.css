@@ -200,6 +200,7 @@ h1 {
 }
 
 .stepper button {
+  -webkit-touch-callout: none;
   aspect-ratio: 1;
   background: var(--button);
   border: 1px solid var(--line);
