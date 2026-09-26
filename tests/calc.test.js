@@ -26,6 +26,13 @@ test("percent tip rounds to the nearest cent", () => {
   assert.equal(percentTipCents(1234, 0), 0);
 });
 
+test("percent tip rounds exact half cents up", () => {
+  // 50 * 29 / 100 is exactly 14.5; dividing the percent first gave 14.
+  assert.equal(percentTipCents(50, 29), 15);
+  assert.equal(percentTipCents(25, 58), 15);
+  assert.equal(percentTipCents(4500, 70), 3150);
+});
+
 test("totals add the tip and round the per-person share", () => {
   assert.deepEqual(computeTotals(1000, 200, 3), {
     tipCents: 200,

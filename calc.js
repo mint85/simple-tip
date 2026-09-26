@@ -10,7 +10,9 @@ export function deleteDigit(cents) {
 }
 
 export function percentTipCents(billCents, tipPercent) {
-  return Math.round(billCents * (tipPercent / 100));
+  // Multiply before dividing: tipPercent / 100 is inexact (0.29 is 0.28999...), which
+  // can turn an exact half cent into 14.4999... and round it the wrong way.
+  return Math.round((billCents * tipPercent) / 100);
 }
 
 export function computeTotals(billCents, tipCents, splitCount) {
