@@ -1,3 +1,5 @@
+import { appendDigit, computeTotals, deleteDigit, percentTipCents } from "./calc.js";
+
 const state = {
   cents: 0,
   tipPercent: Number(localStorage.getItem("simpleTip.tipPercent")) || 18,
@@ -44,9 +46,8 @@ function hapticTap() {
 }
 
 function render() {
-  const tipCents = Math.round(state.cents * (state.tipPercent / 100));
-  const totalCents = state.cents + tipCents;
-  const perPersonCents = Math.round(totalCents / state.splitCount);
+  const tipCents = percentTipCents(state.cents, state.tipPercent);
+  const { totalCents, perPersonCents } = computeTotals(state.cents, tipCents, state.splitCount);
 
   elements.billAmount.value = formatCents(state.cents);
   elements.tipPercent.value = `${state.tipPercent}%`;
@@ -60,8 +61,7 @@ function render() {
 }
 
 function addDigit(digit) {
-  if (state.cents > 999999999) return;
-  state.cents = state.cents * 10 + Number(digit);
+  state.cents = appendDigit(state.cents, digit);
   render();
 }
 
@@ -79,7 +79,7 @@ elements.reset.addEventListener("click", () => {
 });
 
 elements.delete.addEventListener("click", () => {
-  state.cents = Math.floor(state.cents / 10);
+  state.cents = deleteDigit(state.cents);
   render();
 });
 
@@ -120,7 +120,7 @@ elements.aboutDialog.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (/^[0-9]$/.test(event.key)) addDigit(event.key);
   if (event.key === "Backspace") {
-    state.cents = Math.floor(state.cents / 10);
+    state.cents = deleteDigit(state.cents);
     render();
   }
   if (event.key === "Escape") {
