@@ -12,6 +12,7 @@
   --button: #f6faf9;
   --button-pressed: #dce9e7;
   --shadow: 0 18px 40px rgba(18, 58, 66, 0.16);
+  --stepper-button: clamp(38px, 10vw, 44px);
   font-family: Inter, Roboto, "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
@@ -160,14 +161,16 @@ h1 {
   padding: clamp(8px, 1.4dvh, 12px);
 }
 
+/* Same columns as the stepper so the toggle sits over the value, not over + or −. */
 .control-head {
   align-items: center;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: var(--stepper-button) 1fr var(--stepper-button);
 }
 
 .unit-toggle {
   display: flex;
+  justify-self: center;
   /* Keeps the bigger tap targets from making the Tip control taller than Split. */
   margin-block: -7px;
 }
@@ -179,7 +182,7 @@ h1 {
   font-size: 0.85rem;
   font-weight: 850;
   height: 28px;
-  width: 32px;
+  width: 28px;
 }
 
 .unit-toggle button + button {
@@ -195,7 +198,7 @@ h1 {
 .stepper {
   align-items: center;
   display: grid;
-  grid-template-columns: clamp(38px, 10vw, 44px) 1fr clamp(38px, 10vw, 44px);
+  grid-template-columns: var(--stepper-button) 1fr var(--stepper-button);
   min-height: clamp(40px, 5.4dvh, 48px);
 }
 
