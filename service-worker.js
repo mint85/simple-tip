@@ -11,6 +11,7 @@ const ASSETS = [
   "./calc.js",
   "./manifest.webmanifest",
   "./icons/icon.svg",
+  "./icons/portfolio-favicon.png",
 ];
 
 self.addEventListener("install", (event) => {
