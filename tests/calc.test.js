@@ -7,6 +7,7 @@ import {
   deleteDigit,
   effectiveTipPercent,
   nearestDollarTip,
+  nearestPercentTip,
   percentTipCents,
 } from "../calc.js";
 
@@ -68,4 +69,12 @@ test("a dollar tip flows through the totals as exact cents", () => {
     totalCents: 6234,
     perPersonCents: 2078,
   });
+});
+
+test("leaving dollar mode picks the nearest whole percent", () => {
+  assert.equal(nearestPercentTip(5200, 1100), 21); // 21.15%
+  assert.equal(nearestPercentTip(4000, 1000), 25);
+  assert.equal(nearestPercentTip(1000, 250), 25); // 25% exactly
+  assert.equal(nearestPercentTip(2000, 1050), 53); // 52.5% rounds up
+  assert.equal(nearestPercentTip(0, 1000), null);
 });

@@ -33,3 +33,8 @@ export function nearestDollarTip(billCents, tipPercent) {
 export function effectiveTipPercent(billCents, tipCents) {
   return billCents === 0 ? null : (tipCents * 100) / billCents;
 }
+
+// Whole percent closest to a tip, used when leaving dollar mode. Null when there is no bill.
+export function nearestPercentTip(billCents, tipCents) {
+  return billCents === 0 ? null : Math.round((tipCents * 100) / billCents);
+}

@@ -4,6 +4,7 @@ import {
   deleteDigit,
   effectiveTipPercent,
   nearestDollarTip,
+  nearestPercentTip,
   percentTipCents,
 } from "./calc.js";
 
@@ -12,6 +13,8 @@ const state = {
   tipMode: "percent",
   tipPercent: 20,
   tipDollars: 0,
+  // Dollar amount dollar mode started from, to tell a real edit from a quick look.
+  tipDollarsSeed: 0,
   splitCount: 1,
 };
 
@@ -180,6 +183,13 @@ elements.delete.addEventListener("click", () => {
 });
 
 elements.tipModePercent.addEventListener("click", () => {
+  if (state.tipMode === "percent") return;
+  // Carry an edited dollar tip over as the nearest whole percent. An untouched one
+  // restores the original percent, so peeking at dollar mode never drifts it.
+  if (state.tipDollars !== state.tipDollarsSeed) {
+    const percent = nearestPercentTip(state.cents, state.tipDollars * 100);
+    if (percent !== null) state.tipPercent = clamp(percent, 0, 100);
+  }
   state.tipMode = "percent";
   render();
 });
@@ -188,6 +198,7 @@ elements.tipModeDollars.addEventListener("click", () => {
   if (state.tipMode === "dollars") return;
   state.tipMode = "dollars";
   state.tipDollars = nearestDollarTip(state.cents, state.tipPercent);
+  state.tipDollarsSeed = state.tipDollars;
   render();
 });
 
